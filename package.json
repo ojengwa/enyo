@@ -1,0 +1,21 @@
+{
+  "name": "andela-staff",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.0.2",
+    "bunyan": "^1.2.3",
+    "cors": "^2.5.2",
+    "ejs": "^1.0.0",
+    "express": "^4.1.1",
+    "express-session": "^1.6.1",
+    "mongoose": "^3.8.8",
+    "oauth2orize": "^1.0.1",
+    "passport": "^0.2.0",
+    "passport-http": "^0.2.2",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "restify": "^2.8.4",
+    "restify-mongoose": "^0.2.2"
+  }
+}
