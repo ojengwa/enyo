@@ -2,12 +2,26 @@
 
 // Load required packages
 var userModel = require('../models/user'),
-    services = require('../services/crud');
+    services = require('../services/crud'),
+    jwt = require('jsonwebtoken'),
+    _ = require('lodash'),
+    Utils = require('../core/utils').Utils, 
+    auth = require('../services/auth');
 
 
 // Create endpoint /api/v1/users for POST
-exports.postUsers = function (req, res) {
+exports.signup = function (req, res) {
+  var token;
+  
   services.doPost(userModel, req.body, function (err, obj){
+
+    if (obj) {
+      token = jwt.sign(obj, Utils.salt);
+      auth.saveToken(obj._id, token);
+      res.setHeader('authorization', 'Bearer ' + token);
+      obj = _.pick(obj, ['id', 'firstname', 'lastname', 'email', 'roles', 'created']);
+    }
+
     res.json({ response: err || obj });
   });
 };
@@ -19,43 +33,31 @@ exports.getUsers = function (req, res) {
   });
 };
 
-// Create endpoint /api/v1/users/:userId for GET
+// Create endpoint /api/v1/users/:id for GET
 exports.getUser = function (req, res) {
-  var userId = req.params.userId;
+  var id = req.params.id;
 
-  services.getOne(userModel, userId, function (err, obj) {
+  services.getOne(userModel, id, function (err, obj) {
     res.json({response: err || obj });
   });
 };
 
-// Create endpoint /api/v1/users/:userId for UPDATE
+// Create endpoint /api/v1/users/:id for UPDATE
 exports.putUser = function (req, res) {
-  var userId = req.params.userId,
-      payload = req.body;
+  var id = req.params.id,
+      data = req.body;
 
-  services.getOne(userModel, userId, function (err, obj) {
+  services.getOne(userModel, data, id, function (err, obj) {
     res.json({response: err || obj });
   });
 
 };
 
-//Create endpoint for /api/v1/users/:userId/delete DELETE
+//Create endpoint for /api/v1/users/:id/delete DELETE
 exports.deleteUser = function (req, res) {
-  var userId = req.params.userId;
+  var id = req.params.id;
 
-  User.findOne(userId, function (err, user) {
-
-    if (err) {
-      res.send(err);
-    }  else if (!user.isActive) {
-      res.send({code: 404, message: 'The requested resource was not found!'});
-    } else{
-      User.update({userId: userId}, {$set: {isActive: false}}, function (err) {
-        if (err) {
-          res.send(err);
-        }
-        res.json({code: 200, message: "User deleted successfully"});
-      });
-  }
+  services.getOne(userModel, id, function (err, obj) {
+    res.json({response: err || obj });
   });
 };

@@ -27,8 +27,8 @@ var ReportSchema   = new Schema({
     required: 'Please add more details to your report.'
   },
 
-  creatorId: {
-    type: Schema.ObjectId,
+  creator: {
+    type: String,
     ref: 'User'
   },
 

@@ -8,31 +8,27 @@ exports.doPost = function (Model, payload, cb) {
     var Obj = new Model(payload);
     Obj.save(function (err, obj) {
       if (err) {
-        console.log('should be err', err.err);
-        cb(err, null);
+        cb(err.err, null);
       } else {
-        console.log('should be user', obj);
         cb(null, obj);
       }
     });
   } catch (e) {
-    cb(e);
+    cb(e, null);
   }
 };
 
 exports.doUpdate = function (Model, payload, id, cb) {
   try {
-    Model.findOneAndUpdate(id, {$set: payload}, function (err, obj) {
+    Model.findOneAndUpdate({id: id}, {$set: payload}, function (err, obj) {
       if (err) {
-        console.log('should be err', err.err);
-        cb(err, null);
+        cb(err.err, null);
       } else {
-        console.log('should be user', obj);
         cb(null,obj);
       }
     });
   } catch (e) {
-    cb(e);
+    cb(e, null);
   }
 };
 
@@ -42,46 +38,41 @@ exports.getAll = function (Model, cb) {
       .where('isActive', true)
       .exec(function (err, obj) {
         if (err) {
-          console.log('should be err', err.err);
-          cb(err, null);
+          cb(err.err, null);
         } else {
-          console.log('should be user', obj);
-          cb(null,obj);
+          cb(null, obj);
         }
+        
       });
   } catch (e){
-    cb(e);
+    cb(e, null);
   }
 };
 
-exports.getOne = function (Model, username, cb) {
+exports.getOne = function (Model, id, cb) {
   try {
-    Model.find(username, Utils._filter, function (err, obj) {
+    Model.find({id: id}, Utils._filter, function (err, obj) {
       if (err) {
-        console.log('should be err', err.err);
-        cb(err, null);
+        cb(err.err, null);
       } else {
-        console.log('should be user', obj);
-        cb(null,obj);
+        cb(null, obj);
       }
     });
   } catch (e) {
-    cb(e);
+    cb(e, null);
   }
 };
 
 exports.doDelete = function (Model, id, cb) {
   try {
-    Model.findOneAndUpdate(id, {$set: {isActive: false}}, function (err, obj) {
+    Model.findOneAndUpdate({id: id}, {$set: {isActive: false}}, function (err, obj) {
       if (err) {
-        console.log('should be err', err.err);
-        cb(err, null);
+        cb(err.err, null);
       } else {
-        console.log('should be user', obj);
-        cb(null,obj);
+        cb(null, obj);
       }
     });
   } catch (e) {
-    cb(e);
+    cb(e, null);
   }
 };

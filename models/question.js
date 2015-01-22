@@ -1,9 +1,5 @@
-'use strict';
-
 var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		ObjectId = Schema.ObjectId;
-
+    Schema = mongoose.Schema;
 
 var questionSchema = new Schema({
 
@@ -27,8 +23,8 @@ var questionSchema = new Schema({
     default: ['group']
   },
 
-  user: {
-    type: ObjectId,
+  creator: {
+    type: String,
     ref: 'User'
   }
 
