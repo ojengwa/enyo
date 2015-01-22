@@ -20,7 +20,7 @@ var restify = require('restify'),
     });
 
 // Connect to MongoDB
-//mongoose.connect(config.db.uri);
+mongoose.connect(config.db.uri);
 
 
 //Register restify's middlewares
@@ -32,7 +32,7 @@ app.use(restify.bodyParser());
 //Register other middlewares
 app.use(restify.CORS());
 
-// //Register JWT middiware
+//Register JWT middiware
 // app.use(restifyJWT({
 //     secret: Utils.salt,
 //     getToken: auth.getToken,
