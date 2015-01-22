@@ -1,13 +1,18 @@
 'use strict';
 
-var config = require('../config/init'),
-    redisClient = require('redis'),
+var init = require('../config/init'),
+    config = require('../config/config'),
+    redis = require('redis'),
     jwt = require('jsonwebtoken'),
 
     User = require('../models/user'),
-    redis = redisClient.createClient();
 
-redis.on('error', function (err) {
+    redisClient = redis.createClient(config.redis.port, config.redis.host);
+    if (config.redis.password !== '') {
+        redisClient.auth(config.redis.password);
+    }
+
+redisClient.on('error', function (err) {
   console.error('Redis error', err);
 });
 
@@ -40,14 +45,14 @@ exports.getToken = function (req) {
 };
 
 exports.saveToken = function (userId, token) {
-  redis.set(userId, token, redisClient.print);
+  redisClient.set(userId, token, redisClient.print);
   
-  redis.quit();
+  redisClient.quit();
 };
 
 exports.fetchToken = function (userId, cb) {
 
-  redis.get(userId, function (err, token) {
+  redisClient.get(userId, function (err, token) {
     if (err) {
       console.log(err);
       cb(err, null);

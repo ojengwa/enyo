@@ -1,5 +1,25 @@
 'use strict';
 
+var env,
+    mongodb,
+    redis;
+
+if (process.env.VCAP_SERVICES) {
+    env = JSON.parse(process.env.VCAP_SERVICES);
+
+    //Define the various db Configuretions from the envronment
+    redis = env['redis-2.6'][0].credentials;
+    // mongodb = env['mongodb-2.4'][0].credentials;
+
+} else {
+    redis = {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "username" : "",
+        "password" : ""
+    };
+}
+
 module.exports = {
 
   host: {
@@ -8,12 +28,9 @@ module.exports = {
   },
 
   db: {
-    uri: process.env.MONGO_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/staffy',
-    options: {
-      user: '',
-      pass: ''
-    }
+    uri: process.env.MONGO_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/staffy'
   },
+  redis: redis,
   log: {
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
     format: 'combined',

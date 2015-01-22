@@ -33,16 +33,16 @@ app.use(restify.bodyParser());
 app.use(restify.CORS());
 
 //Register JWT middiware
-// app.use(restifyJWT({
-//     secret: Utils.salt,
-//     getToken: auth.getToken,
-//     credentialsRequired: true
-//   })
-//   .unless({
-//     path: ['/api/v1/users/create'],
-//     method: ['POST']
-//   })
-// );
+app.use(restifyJWT({
+    secret: Utils.salt,
+    getToken: auth.getToken,
+    credentialsRequired: true
+  })
+  .unless({
+    path: ['/api/v1/users/create'],
+    method: ['POST']
+  })
+);
 
 //Routes for User resources
 app.get('/api/v1/users', Users.getUsers);
@@ -51,8 +51,5 @@ app.get('/api/v1/users/:username', Users.getUser);
 app.put('/api/v1/users/:username/update', Users.putUser);
 app.del('/api/v1/users/:username/delete', Users.deleteUser);
 
-app.get('/', function (req, res) {
-  res.send("Hello world");
-})
 
 app.listen(config.host.port, config.host.url);
