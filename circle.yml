@@ -2,8 +2,8 @@ machine:
   environment:
     SECRET_KEY: kshbhsfjjsfsfhiyfshiusfhihsihih
     NODE_ENV: test
-    BLUEMIX_USER: bernardojengwa@gmail.com
-    BLUEMIX_PASSWORD: nnanna10
+    BLUEMIX_USER: bernard.ojengwa@andela.co
+    BLUEMIX_PASSWORD: okpanku00
 
 dependencies:
   pre:
