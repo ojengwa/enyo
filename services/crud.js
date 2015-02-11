@@ -8,27 +8,31 @@ exports.doPost = function (Model, payload, cb) {
     var Obj = new Model(payload);
     Obj.save(function (err, obj) {
       if (err) {
-        cb(err.err, null);
+        console.log('should be err', err.err);
+        cb(err, null);
       } else {
+        console.log('should be user', obj);
         cb(null, obj);
       }
     });
   } catch (e) {
-    cb(e, null);
+    cb(e);
   }
 };
 
 exports.doUpdate = function (Model, payload, id, cb) {
   try {
-    Model.findOneAndUpdate({id: id}, {$set: payload}, function (err, obj) {
+    Model.findOneAndUpdate(id, {$set: payload}, function (err, obj) {
       if (err) {
-        cb(err.err, null);
+        console.log('should be err', err.err);
+        cb(err, null);
       } else {
+        console.log('should be user', obj);
         cb(null,obj);
       }
     });
   } catch (e) {
-    cb(e, null);
+    cb(e);
   }
 };
 
@@ -38,41 +42,46 @@ exports.getAll = function (Model, cb) {
       .where('isActive', true)
       .exec(function (err, obj) {
         if (err) {
-          cb(err.err, null);
+          console.log('should be err', err.err);
+          cb(err, null);
         } else {
-          cb(null, obj);
+          console.log('should be user', obj);
+          cb(null,obj);
         }
-        
       });
   } catch (e){
-    cb(e, null);
+    cb(e);
   }
 };
 
-exports.getOne = function (Model, id, cb) {
+exports.getOne = function (Model, username, cb) {
   try {
-    Model.find({id: id}, Utils._filter, function (err, obj) {
+    Model.find(username, Utils._filter, function (err, obj) {
       if (err) {
-        cb(err.err, null);
+        console.log('should be err', err.err);
+        cb(err, null);
       } else {
-        cb(null, obj);
+        console.log('should be user', obj);
+        cb(null,obj);
       }
     });
   } catch (e) {
-    cb(e, null);
+    cb(e);
   }
 };
 
 exports.doDelete = function (Model, id, cb) {
   try {
-    Model.findOneAndUpdate({id: id}, {$set: {isActive: false}}, function (err, obj) {
+    Model.findOneAndUpdate(id, {$set: {isActive: false}}, function (err, obj) {
       if (err) {
-        cb(err.err, null);
+        console.log('should be err', err.err);
+        cb(err, null);
       } else {
-        cb(null, obj);
+        console.log('should be user', obj);
+        cb(null,obj);
       }
     });
   } catch (e) {
-    cb(e, null);
+    cb(e);
   }
 };

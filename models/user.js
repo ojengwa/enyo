@@ -29,7 +29,7 @@ var UserSchema = new Schema({
     // match: [^\[A-Z0-9._%+-\]+@andela.co$, "Please enter your valid company email address"]
   },
 
-  id: {
+  userId: {
     type: String,
     unique: true
   },
@@ -83,7 +83,7 @@ UserSchema.pre('save', function (callback) {
       email = this.email,
       sep = email.lastIndexOf('@');
 
-  user.id = email.substr(0, sep);
+  user.userId = email.substr(0, sep);
 
   // Break out if the password hasn't changed
   if (!user.isModified('password')) {

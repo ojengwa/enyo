@@ -1,0 +1,37 @@
+machine:
+  environment:
+    SECRET_KEY: kshbhsfjjsfsfhiyfshiusfhihsihih
+    NODE_ENV: test
+    BLUEMIX_USER: bernardojengwa@gmail.com
+    BLUEMIX_PASSWORD: nnanna10
+
+dependencies:
+  pre:
+    - curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+    - sudo dpkg -i cf-cli_amd64.deb
+    - cf -v
+
+test:
+  post:
+    - cf api https://api.ng.bluemix.net
+    - cf login -u $BLUEMIX_USER -p $BLUEMIX_PASSWORD
+    - cf target -o andela -s 'GDG UNN'
+    - cf a
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - cf push enyo-api
+
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: enyo-api
+
+# deployment:
+#   appengine:
+#     branch: master
+#     commands:
+#       - echo $APPENGINE_PASSWORD | $HOME/google_appengine/appcfg.py update --email=$APPENGINE_EMAIL --passin .
