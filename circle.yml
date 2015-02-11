@@ -22,13 +22,13 @@ deployment:
   production:
     branch: master
     commands:
-      - cf push enyo-api
+      - cf push enyo-234
 
-deployment:
-  staging:
-    branch: master
-    heroku:
-      appname: andela-talk
+# deployment:
+#   staging:
+#     branch: master
+#     heroku:
+#       appname: andela-talk
 
 # deployment:
 #   appengine:
