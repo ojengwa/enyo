@@ -28,7 +28,7 @@ deployment:
   staging:
     branch: master
     heroku:
-      appname: enyo-api
+      appname: andela-talk
 
 # deployment:
 #   appengine:
